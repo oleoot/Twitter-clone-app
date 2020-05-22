@@ -13,8 +13,25 @@ app.get('/', (req, res) => {
     })
 })
 
+function isValidTweet(tweet) {
+    return tweet.name && tweet.name.toString().trim() !== '' && tweet.content && tweet.content.toString().trim() !== ''
+}
+
+
 app.post('/tweets', (req, res) => {
-    console.log(req.body)
+    if (isValidTweet(req.body)) {
+        const tweet = {
+            name: req.body.name.toString(),
+            content: req.body.content.toString()
+
+        }
+        console.log(tweet)
+    } else {
+        res.status(422);
+        res.json({
+            message: "Name and content are required"
+        })
+    }
 })
 
 
