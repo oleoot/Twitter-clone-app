@@ -33,14 +33,17 @@ form.addEventListener('submit', (event) => {
             console.log(createdTweet)
             form.reset()
             loadingElement.style.display = 'none'
+            listAllMews()
             form.style.display = ''
         })
 })
 
 function listAllMews() {
+    tweetsElement.innerHTML = ''
     fetch(API_URL)
         .then(response => response.json())
         .then(tweets => {
+            tweets.reverse();
             console.log(tweets)
             tweets.forEach(tweet => {
                 const div = document.createElement('div');
@@ -49,9 +52,9 @@ function listAllMews() {
 
                 const contents = document.createElement('p');
                 contents.textContent = tweet.content
-
-                div.append(header)
-                div.append(contents)
+                const date = document.createElement('small')
+                date.textContent = new Date(tweet.created);
+                div.append(header, contents, date)
                 tweetsElement.append(div)
             });
             loadingElement.style.display = 'none'
