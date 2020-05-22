@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const monk = require('monk');
+const Filter = require('bad-words')
 
 
 const app = express();
@@ -8,7 +9,7 @@ const app = express();
 
 const db = monk('localhost/database');
 const tweets = db.get('tweets')
-
+const filter = new Filter()
 
 
 
@@ -37,8 +38,8 @@ function isValidTweet(tweet) {
 app.post('/tweets', (req, res) => {
     if (isValidTweet(req.body)) {
         const tweet = {
-            name: req.body.name.toString(),
-            content: req.body.content.toString(),
+            name: filter.clean(req.body.name.toString()),
+            content: filter.clean(req.body.content.toString()),
             created: new Date()
         }
         tweets
