@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const monk = require('monk');
 const Filter = require('bad-words')
-
+const ratelimit = require('express-rate-limit');
 
 const app = express();
 
@@ -16,6 +16,7 @@ const filter = new Filter()
 
 app.use(cors())
 app.use(express.json())
+
 
 app.get('/', (req, res) => {
     res.json({
@@ -34,6 +35,11 @@ function isValidTweet(tweet) {
     return tweet.name && tweet.name.toString().trim() !== '' && tweet.content && tweet.content.toString().trim() !== ''
 }
 
+
+app.use(ratelimit({
+    window: 30 * 1000,
+    max: 5
+}))
 
 app.post('/tweets', (req, res) => {
     if (isValidTweet(req.body)) {
