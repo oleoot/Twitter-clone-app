@@ -1,9 +1,12 @@
 const form = document.querySelector('.main-form')
 const loadingElement = document.querySelector('.loading')
-
+const tweetsElement = document.querySelector('.tweets')
 const API_URL = 'http://localhost:5000/tweets'
 
-loadingElement.style.display = 'none'
+loadingElement.style.display = ''
+
+
+listAllMews()
 
 
 form.addEventListener('submit', (event) => {
@@ -33,3 +36,24 @@ form.addEventListener('submit', (event) => {
             form.style.display = ''
         })
 })
+
+function listAllMews() {
+    fetch(API_URL)
+        .then(response => response.json())
+        .then(tweets => {
+            console.log(tweets)
+            tweets.forEach(tweet => {
+                const div = document.createElement('div');
+                const header = document.createElement('h3');
+                header.textContent = tweet.name;
+
+                const contents = document.createElement('p');
+                contents.textContent = tweet.content
+
+                div.append(header)
+                div.append(contents)
+                tweetsElement.append(div)
+            });
+            loadingElement.style.display = 'none'
+        })
+}
