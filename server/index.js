@@ -22,6 +22,13 @@ app.get('/', (req, res) => {
     })
 })
 
+app.get('/tweets', (req, res) => {
+    tweets.find().then(tweets => {
+        res.json(tweets)
+    })
+})
+
+
 function isValidTweet(tweet) {
     return tweet.name && tweet.name.toString().trim() !== '' && tweet.content && tweet.content.toString().trim() !== ''
 }
@@ -34,7 +41,7 @@ app.post('/tweets', (req, res) => {
             content: req.body.content.toString(),
             created: new Date()
         }
-        tweet
+        tweets
             .insert(tweet)
             .then(createdTweet => {
                 res.json(createdTweet)

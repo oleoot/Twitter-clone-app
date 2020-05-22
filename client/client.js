@@ -25,5 +25,11 @@ form.addEventListener('submit', (event) => {
         headers: {
             'content-type': 'application/json'
         }
-    })
+    }).then(response => response.json())
+        .then(createdTweet => {
+            console.log(createdTweet)
+            form.reset()
+            loadingElement.style.display = 'none'
+            form.style.display = ''
+        })
 })
