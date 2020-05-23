@@ -1,7 +1,7 @@
 const form = document.querySelector('.main-form')
 const loadingElement = document.querySelector('.loading')
-const tweetsElement = document.querySelector('.tweets')
-const API_URL = 'http://localhost:5000/tweets'
+const tweetsElement = document.querySelector('.tweets');
+const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000/tweets' : 'https://twitter-clone-database.oleoot.now.sh/tweets'
 
 loadingElement.style.display = ''
 
@@ -30,7 +30,6 @@ form.addEventListener('submit', (event) => {
         }
     }).then(response => response.json())
         .then(createdTweet => {
-            console.log(createdTweet)
             form.reset()
             loadingElement.style.display = 'none'
             listAllMews()
@@ -44,7 +43,6 @@ function listAllMews() {
         .then(response => response.json())
         .then(tweets => {
             tweets.reverse();
-            console.log(tweets)
             tweets.forEach(tweet => {
                 const div = document.createElement('div');
                 const header = document.createElement('h3');

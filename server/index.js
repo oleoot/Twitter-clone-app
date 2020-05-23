@@ -3,11 +3,12 @@ const cors = require('cors');
 const monk = require('monk');
 const Filter = require('bad-words')
 const ratelimit = require('express-rate-limit');
+require('dotenv').config();
 
 const app = express();
 
 
-const db = monk('localhost/database');
+const db = monk(process.env.DATABASE_URL);
 const tweets = db.get('tweets')
 const filter = new Filter()
 
@@ -67,8 +68,7 @@ app.post('/tweets', (req, res) => {
 
 
 
-
-
-app.listen(5000, () => {
-    console.log("Listening on port 5000")
-})
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+    console.log(`Listening at http://localhost:${port}`);
+});

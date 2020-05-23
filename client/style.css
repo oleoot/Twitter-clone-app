@@ -3,12 +3,22 @@ margin: 0;
 padding: 0;
 box-sizing: border-box;
 }
+body{
+padding-top: 50px;
+}
 .title{
  text-align: center;
 }
 .main-form{
 width: 60%;
 margin: 0 auto;
+}
+textarea{
+resize: none;
+}
+.headline{
+text-align: center;
+margin-top: 30px;
 }
 .loading img{
 display: block;
@@ -17,4 +27,21 @@ margin: 0 auto;
 .tweets{
 width: 60%;
 margin: 50px auto;
+}
+.tweets>div{
+padding: 20px;
+background: #92ddf4;
+border: 3px solid #33C3F0;;
+margin-bottom: 30px;
+border-radius: 10px;
+color: #fff;
+}
+.tweets p, .tweets h3, .tweets small{
+text-shadow: 1px 1px 2px #33C3F0, 0 0;
+}
+@media screen and (max-width: 425px){
+button{
+display: block;
+margin: 0 auto;
+}
 }
